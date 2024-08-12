@@ -8,7 +8,9 @@ export default  function App(){
   const [state,setState] = useState<State>({
     url: "http://localhost:8080",
     method: "GET",
-    body: "{ }"
+    body: "{ }",
+    response: "",
+    headers: "{ }"
   });
 
   function set(key: string, value: any){
@@ -48,6 +50,12 @@ export default  function App(){
         </MenuList>
       </Menu>
     </FormControl>
+    <Text my='20px'>Headers</Text>
+    <Textarea
+        value={state.headers}
+        onChange={(e)=>set("headers",e.target.value)}
+        placeholder='Object'
+    />
     <Text my='20px'>Body</Text>
     <Textarea
         value={state.body}
