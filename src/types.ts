@@ -4,4 +4,5 @@ export type State = {
     body: string;
     response: string;
     headers: string;
+    status: number;
 }
