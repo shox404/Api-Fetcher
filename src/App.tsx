@@ -1,16 +1,22 @@
-import {Fragment, useState} from "react";
-import {Container, Input, FormLabel, FormControl,Button} from "@chakra-ui/react";
+import {useState} from "react";
+import {Container, Input, FormLabel, FormControl, Button, Text, Textarea} from "@chakra-ui/react";
 import {Menu, MenuButton, MenuList, MenuItem} from "@chakra-ui/menu";
 import {State} from "./types";
 import "./App.css";
 
 export default  function App(){
   const [state,setState] = useState<State>({
-    url: ""
+    url: "http://localhost:8080",
+    method: "GET",
+    body: "{ }"
   });
 
   function set(key: string, value: any){
       setState((p) => ({...p, [key]: value}));
+  }
+
+  function send() {
+
   }
 
   return (<Container className="container">
@@ -29,17 +35,24 @@ export default  function App(){
               px={4}
               py={2}
           >
-            GET
+            {state.method}
           </MenuButton>
-          <Input placeholder='https://' onChange={(e) => set("url", e.target.value)} />
+          <Input variant='filled' placeholder='https://' onChange={(e) => set("url", e.target.value)} />
+          <Button onClick={send} colorScheme="blue">Send</Button>
         </div>
         <MenuList>
-          <MenuItem>GET</MenuItem>
-          <MenuItem>POST</MenuItem>
-          <MenuItem>PUT</MenuItem>
-          <MenuItem>DELETE</MenuItem>
+          <MenuItem onClick={()=> set("method", "GET")}>GET</MenuItem>
+          <MenuItem onClick={()=> set("method", "POST")}>POST</MenuItem>
+          <MenuItem onClick={()=> set("method", "PUT")}>PUT</MenuItem>
+          <MenuItem onClick={()=> set("method", "DELETE")}>DELETE</MenuItem>
         </MenuList>
       </Menu>
     </FormControl>
+    <Text my='20px'>Body</Text>
+    <Textarea
+        value={state.body}
+        onChange={(e)=>set("body",e.target.value)}
+        placeholder='Body'
+    />
   </Container>);
 }
